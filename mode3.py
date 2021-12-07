@@ -1,10 +1,8 @@
 '''
-
 2. 분모 - cache_book.txt 데이터 사용
 a) 데이터에서 line을 추출
 b) Total Copies의 리스트들만 추출
 c) 제일 마지막 리스트의 마지막 element를 분모로 사용
-
 '''
 
 
@@ -25,16 +23,36 @@ def ratiotest(book_ratio):
 
     # booklist에서 가져온 것들
     # changed amount of book
-    # 분모
-
+    # 분모 v1
     Booknote = list(cache_book)
-    Tcopy = list(cache_book[1])
-    Ttotal = list(Tcopy[:-1])
+    Trent = list(cache_book[1])
+    Tlist = list(Tcopy[:-1])
     Total = list(Ttotal[1])
     copies.append(Total)
+    '''
+    분모 -> 책을 빌릴 수 있는 기회 총 횟수
+    기간을 30일이라 했을 때: 
+    Total Copies = [1,3][4,4][8,5]
 
+    p=[4,16]
+    min = p[0]
+    max = p[1]
+    range = max-min+1
+    print(range)
+    '''
     # total amount of rent
-    # 분자
+    # 분자 v2
+    Rentdaydata = []
+    Rentdays = list(cache_book[3])
+    for i in range(len(Rentdays)):
+        for j in range(len(RD)):
+            sum = 0
+            RD = list(Rentdays[j])
+            min = RD[0]
+            max = RD[1]
+            range = max-min+1
+            sum += range
+        Rentdaydata.append(sum)
     '''
     1. 분자 - cache_book.txt 데이터 사용
     a) 데이터에서 line 추출

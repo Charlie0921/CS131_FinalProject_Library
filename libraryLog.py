@@ -1,7 +1,3 @@
-# Import Modules
-import cacheStudent as cacheStudent
-
-
 # Return EOL (End of Log) date from the librarylog.txt
 def getLogDate():
     logcalls = open("librarylog.txt", 'r', encoding='utf-8')
@@ -78,9 +74,9 @@ def ReadCommand(code, student_data, book_data):
 # Add new line to student_data and modify borrow time portion of book_data
 def borrowBooks(day, student_name, book_name, days_borrowed, student_data, book_data):
     # Dataframe Information
-    # [Student Name, Book Name, Borrow Start, Borrow End, Return Date, [Days, Pending Fines]]
+    # [Student Name, Book Name, Borrow Start, Borrow End, Return Date, [Day, Fine]]
     borrow_info = [student_name, book_name, day,
-                   day+days_borrowed, None, []]
+                   day+days_borrowed, None, [1, 0]]
     student_data.append(borrow_info)
     # Find book on book database
     for i in range(len(book_data)):
@@ -88,19 +84,19 @@ def borrowBooks(day, student_name, book_name, days_borrowed, student_data, book_
             # Add Borrow time to the book data
             book_data[i][3].append([day, day+days_borrowed])
             break
-    print("BORROW BOOKS [200]")
 
 
 # Modify return date portion of student_data
 def returnBooks(day, student_name, book_name, student_data, book_data):
-    # Update books dataframe to address the remaining books
+    # Find borrow record for given student name and book name
     index = -1
     for i in range(len(student_data)):
         if student_data[i][0] == student_name and student_data[i][1] == book_name:
             index = i
             break
-    # Find whether the book is restricted or not
+    # [Borrow Start Date, Borrow End Date]
     rent_info = [student_data[index][2], student_data[index][3]]
+    # Find whether the book is restricted or not
     fine_rate = 0
     for i in range(len(book_data)):
         if book_data[i][0] == book_name:
@@ -118,26 +114,24 @@ def returnBooks(day, student_name, book_name, student_data, book_data):
     if index > -1:
         student_data[index][4] = day  # Update return date
         # Update fine as the return date is given
-        student_data[index][5] = [day, fine_rate *
-                                  (int(student_data[index][4]) - int(student_data[index][3]))]
-    print("RETURN BOOKS [200]")
+        student_data[index][5].append(
+            [day, fine_rate * (int(student_data[index][4]) - int(student_data[index][3]))])
 
 
-# Modify fine & finedate portion of student_data
+# Modify [Day, Fine] portion of student_data
 def payFines(day, student_name, amount, student_data):
     remaining_fine = int(amount)
     for i in range(len(student_data)):
-        if student_data[i][0] == student_name and student_data[i][5] != 0:
+        # Find a data with given student name and pending fine
+        if student_data[i][0] == student_name and student_data[i][5][-1][-1] != 0:
             # There is a pending fine
-            if remaining_fine >= student_data[i][5]:
-                remaining_fine -= student_data[i][5]
-                student_data[i][5] = 0
+            if remaining_fine >= student_data[i][5][-1][-1]:
+                remaining_fine -= student_data[i][5][-1][-1]
+                student_data[i][5].append([day, 0])
             else:
-                student_data[i][5] -= remaining_fine
+                student_data[i][5].append(
+                    [day, student_data[i][5][-1][-1] - remaining_fine])
                 remaining_fine = 0
-            # Update the latest day the fine is paid
-            student_data[i][6] = day
-    print("PAY FINE [200]")
 
 
 # Add book to the book_data
@@ -153,4 +147,3 @@ def addBooks(day, book_name, book_data):
     # If the book does not exist
     else:
         book_data.append([book_name, [day, 1], False, []])
-    print("ADD BOOKS [200]")
