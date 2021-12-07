@@ -1,10 +1,10 @@
 data = [['Introduction to python', [[1, 2], [3, 3], [8, 5]], True, [[1, 7], [2, 5], [1, 10]]], ['Dacheng Laojiukan Quanwen Shujuku (大成老旧刊全文数据库)', [[1, 7]], True, [[1, 7], [2, 5], [1, 10]]], ['India, Raj and Empire', [[1, 4]], True, []], ['Technical Report Archive and Image Library (TRAIL)', [[1, 2]], False, []], ["Women's Studies (Adam Matthew Digital)", [[1, 11], [3, 12]], True, []], ['Medical Letter Databases', [
     [1, 1]], False, []], ['ICC Dispute Resolution Library', [[1, 2]], False, []], ['Eye of the world', [[1, 1]], False, []], ['Index Translationum', [[1, 9]], False, []], ['Taylor & Francis eBooks', [[1, 2]], True, []], ['Meiji Japan: The Edward Sylvester Morse Collection from the Peabody Essex Museum, Salem', [[1, 2]], True, []], ['Introduction to programming', [[1, 9]], False, []]]
 
-name = data[0][0]
-originalCopies = data[0][1]
-restriction = data[0][2]
-borrowTime = data[0][3]
+name = data[i][0]
+originalCopies = data[i][1]
+restriction = data[i][2]
+borrowTime = data[i][3]
 
 name = input("Student Name")
 start_date = input("Starting date")
