@@ -1,25 +1,24 @@
 # Import Modules
 import cacheStudent as cacheStudent
-import cacheBook as cacheBook
 
 
+# Return EOL (End of Log) date from the librarylog.txt
 def getLogDate():
     logcalls = open("librarylog.txt", 'r', encoding='utf-8')
     lastDate = -1
     line = logcalls.readline()
-    lastDate = int(line.split('#')[1].strip())
     while line != "":
         line = logcalls.readline()
         if line != "":
-            lastDate = int(line.split('#')[1].strip())
+            lastDate = int(line.strip())
     logcalls.close()
     return lastDate
 
 
-def update(booklist):
+def update(Book, Student):
     # Data
-    student_data = []
-    book_data = booklist
+    student_data = Student
+    book_data = Book
     # Read through log file and process
     logcalls = open("librarylog.txt", 'r', encoding='utf-8')
     line = logcalls.readline()
@@ -29,9 +28,9 @@ def update(booklist):
         if line != "":
             ReadCommand(line.split('#'), student_data, book_data)
     logcalls.close()
-    # Backup data into cache_book.txt and cache_student.txt
-    cacheBook.create(book_data)
-    cacheStudent.create(student_data)
+    # Update changes to two databases
+    Student = student_data
+    Book = book_data
 
 
 def ReadCommand(code, student_data, book_data):
@@ -74,9 +73,6 @@ def ReadCommand(code, student_data, book_data):
         student_name = command[2]
         amount = command[3]
         payFines(day, student_name, amount, student_data)
-    else:
-        # Identifier code does not exist => End of the log
-        NameError
 
 
 # Add new line to student_data and modify borrow time portion of book_data
