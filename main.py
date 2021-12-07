@@ -6,7 +6,7 @@ import mode2 as m2
 import mode4 as m4
 import mode5 as m5
 
-welcome_msg = " 1) Can a student borrow a book on a particular day for a certain number of days?\n 2) What are the most borrowed/popular books in the library?\n 3) Which books have the highest borrow ratio?\n 4) Sorted lists of most borrowed books / books with highest usage ratio.\n 5) What are the pending fines at the end of the log/at a specific day in the log?\n Press any other key to exit\n"
+welcome_msg = "\n 1) Can a student borrow a book on a particular day for a certain number of days?\n 2) What are the most borrowed/popular books in the library?\n 3) Which books have the highest borrow ratio?\n 4) Sorted lists of most borrowed books / books with highest usage ratio.\n 5) What are the pending fines at the end of the log/at a specific day in the log?\n Press any other key to exit\n\n"
 
 # Retrieve Book dataframe from 'booklist.txt'
 Book = init.read()
@@ -41,7 +41,10 @@ while True:
             day = init.getLogDate()
         else:
             day = int(uin)
-        print(day)
-        m5.getPendingFines(day, Student)
+        finelist = m5.getPendingFines(day, Student)
+        if len(finelist) == 0:
+            print("There's no pending fine for day", day)
+        for tuple in finelist:
+            print(tuple[0]+": "+str(tuple[1]))
     else:
         break

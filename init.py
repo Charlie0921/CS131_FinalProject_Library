@@ -47,12 +47,13 @@ def getLogDate():
     line = logcalls.readline()
     while line != "":
         line = logcalls.readline()
-        if line != "":
+        if len(line.strip().split('#')) == 1 and line != "":
             lastDate = int(line.strip())
     logcalls.close()
     return lastDate
 
 
+# Update two databases from librarylog.txt records
 def update(Book, Student):
     # Data
     student_data = Student
@@ -66,6 +67,13 @@ def update(Book, Student):
         if line != "":
             ReadCommand(line.split('#'), student_data, book_data)
     logcalls.close()
+    EOL = getLogDate()
+    # From student_data, find if somebody did not return the book by the EOL
+    for i in range(len(student_data)):
+        log = student_data[i]
+        if log[4] == None:
+            # Make it returned by the end
+            returnBooks(EOL, log[0], log[1], student_data, book_data)
     # Update changes to two databases
     Student = student_data
     Book = book_data
@@ -133,12 +141,14 @@ def borrowBooks(day, student_name, book_name, days_borrowed, student_data, book_
 # Modify return date portion of student_data
 def returnBooks(day, student_name, book_name, student_data, book_data):
     day = int(day)
-    # Find borrow record for given student name and book name
+    # Find the latest borrow record for given student name and book name
     index = -1
-    for i in range(len(student_data)):
+    i = len(student_data)-1
+    while i >= 0:
         if student_data[i][0] == student_name and student_data[i][1] == book_name:
             index = i
             break
+        i -= 1
     # [Borrow Start Date, Borrow End Date]
     rent_info = [student_data[index][2], student_data[index][3]]
     # Find whether the book is restricted or not
@@ -151,6 +161,7 @@ def returnBooks(day, student_name, book_name, student_data, book_data):
             else:
                 fine_rate = 1
             # Update borrow time by new return date
+            print(book_data[i][3])
             borrow_time_index = book_data[i][3].index(rent_info)
             rent_info = [student_data[index][2], day]
             book_data[i][3][borrow_time_index] = rent_info
