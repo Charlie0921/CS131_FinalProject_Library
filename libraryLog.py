@@ -75,7 +75,7 @@ def ReadCommand(code, student_data, book_data):
         amount = command[3]
         payFines(day, student_name, amount, student_data)
     else:
-        # Identifier code does not exist
+        # Identifier code does not exist => End of the log
         NameError
 
 

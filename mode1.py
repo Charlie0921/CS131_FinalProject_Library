@@ -6,74 +6,80 @@ originalCopies = data[0][1]
 restriction = data[0][2]
 borrowTime = data[0][3]
 
+name = input("Student Name")
+start_date = input("Starting date")
+num_of_date = input("Number of days")
+
 
 def checkAvailable(name, start_date, num_of_days, Book, Student):
 
-    # pick the highest number of the end time
-    endTime = []
-    for index in range(0, len(borrowTime)):
-        endTime.append(borrowTime[index][1])
+    def checkNumberBooks(x):
 
-    endTime.sort()
-    largest = endTime[len(endTime)-1]
+        # pick the highest number of the end time
+        endTime = []
+        for index in range(0, len(borrowTime)):
+            endTime.append(borrowTime[index][1])
 
-    # pick the lowest number of the start time
-    startTime = []
-    for index in range(0, len(borrowTime)):
-        startTime.append(borrowTime[index][0])
+        endTime.sort()
+        largest = endTime[len(endTime)-1]
 
-    startTime.sort()
-    startTime.reverse()
-    smallest = startTime[len(endTime)-1]
+        # pick the lowest number of the start time
+        startTime = []
+        for index in range(0, len(borrowTime)):
+            startTime.append(borrowTime[index][0])
 
-    # set range
-    x = int(smallest)
-    y = int(largest)
+        startTime.sort()
+        startTime.reverse()
+        smallest = startTime[len(endTime)-1]
 
-    numberRange = list(range(smallest, largest+1))
+        # set range
+        x = int(smallest)
+        y = int(largest)
 
-    # [days,number of books]
-    check = []
+        numberRange = list(range(smallest, largest+1))
 
-    for number in numberRange:
-        count = numberRange.count(number)
-        check.append([number, count])
-    print("check", check)
+        # [days,number of books]
+        check = []
 
-    changeDate = []
-    for item in data[0][1]:
-        changeDate.append(item)
-    print(changeDate)
+        for number in numberRange:
+            count = numberRange.count(number)
+            check.append([number, count])
+        print("check", check)
 
-    # change copies of books in 2d list
-    j = 0
-    while j < len(check):
-        i = 0
-        while i < len(changeDate):
-            if check[j][0] == changeDate[i][0]:
-                check[j][1] = changeDate[i][1]
-                break
-            else:
-                check[j][1] = check[j-1][1]
-            i += 1
-        j += 1
+        changeDate = []
+        for item in data[0][1]:
+            changeDate.append(item)
+        print(changeDate)
 
-    print(check)
+        # change copies of books in 2d list
+        j = 0
+        while j < len(check):
+            i = 0
+            while i < len(changeDate):
+                if check[j][0] == changeDate[i][0]:
+                    check[j][1] = changeDate[i][1]
+                    break
+                else:
+                    check[j][1] = check[j-1][1]
+                i += 1
+            j += 1
 
-    # calculate number of books after borrowing
+        print(check)
 
-    def borrow(z):
-        borrowRange = list(range(borrowTime[z][0], borrowTime[z][1]+1))
-        print("brorrow", borrowRange)
+        # calculate number of books after borrowing
 
-        i = 0
-        while i < len(check):
-            if check[i][1] == 0:
-                check[i][1] = 0
-            elif check[i][0] in borrowRange:
-                check[i][1] = check[i][1] - 1
-            i += 1
+        def borrow(z):
+            borrowRange = list(range(borrowTime[z][0], borrowTime[z][1]+1))
+            print("brorrow", borrowRange)
 
-    for x in range(0, len(borrowTime)):
-        borrow(x)
-    print(check)
+            i = 0
+            while i < len(check):
+                if check[i][1] == 0:
+                    check[i][1] = 0
+                elif check[i][0] in borrowRange:
+                    check[i][1] = check[i][1] - 1
+                i += 1
+
+        for x in range(0, len(borrowTime)):
+            borrow(x)
+        print(check)
