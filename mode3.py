@@ -1,13 +1,10 @@
-'''
-2. 분모 - cache_book.txt 데이터 사용
-a) 데이터에서 line을 추출
-b) Total Copies의 리스트들만 추출
-c) 제일 마지막 리스트의 마지막 element를 분모로 사용
-'''
+import init as init
+
+# Get the end of the log date
+end_of_the_log = init.getLogDate()
 
 
-def ratiotest(book_ratio):
-    Book = input("Book you want: ")
+def ratiotest(Book):
 
     # library 3
     book = []
@@ -16,12 +13,12 @@ def ratiotest(book_ratio):
     # book = [책제목...]
     # copies = [책 소유량]
 
-    for i in range(len(booklist)):
-        t = list(booklist[i])
+    for i in range(len(Book)):
+        t = list(Book[i])
         book.append(t[0])
         copies.append(t[1])
 
-    # booklist에서 가져온 것들
+    # Book에서 가져온 것들
     # changed amount of book
     # 분모 v1
     '''
@@ -36,8 +33,8 @@ def ratiotest(book_ratio):
     print(range)
     '''
     x = "end point"
-    Booknote = list(cache_book)
-    Trent = list(cache_book[1])
+    Booknote = list(Book)
+    Trent = list(Book[1])
     date = []
     for i in range(len(Trent)):
         Tr = list(Trent[i])
@@ -49,7 +46,7 @@ def ratiotest(book_ratio):
     # total amount of rent
     # 분자 v2
     Rentdaydata = []
-    Rentdays = list(cache_book[3])
+    Rentdays = list(Book[3])
     for i in range(len(Rentdays)):
         for j in range(len(RD)):
             sum = 0

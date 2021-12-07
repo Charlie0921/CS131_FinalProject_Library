@@ -4,7 +4,7 @@ def getPendingFines(day, Student):
     # Iterate through all student borrow/return data in the database
     for i in range(len(Student)):
         obj = Student[i]
-        # If Name already exists
+        # If name already exists
         index = searchName(fineList, obj[0])
         if index > -1:
             # Update fine

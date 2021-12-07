@@ -32,17 +32,16 @@ while True:
         # Borrow Ratio (replace 'pass' with corresponding functions)
         pass
     elif mode_select == 4:
-
         # Sorted List of books (replace 'pass' with corresponding functions)
         pass
     elif mode_select == 5:
         # Pending Fines
         uin = input("On which day? Type F for the day at the end of the log: ")
         if uin == "F":
-            day = libLog.getLogDate()
+            day = init.getLogDate()
         else:
             day = int(uin)
         print(day)
-        m5.getPendingFines(day, Book, Student)
+        m5.getPendingFines(day, Student)
     else:
         break
