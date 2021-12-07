@@ -1,3 +1,45 @@
+# Construct a dataframe by reading through the booklist
+def read():
+    # [Book Name, Total Copies, Restriction, Borrow Time]
+    dataframe = []
+    booklist = open("booklist.txt", 'r', encoding='utf-8')
+    line = booklist.readline()
+    addInfo(line, dataframe)
+    while line != "":
+        line = booklist.readline()
+        if line != "":
+            addInfo(line, dataframe)
+    booklist.close()
+    return dataframe
+
+
+# Process each line of the list
+def addInfo(string, dest):
+    pcs = []
+    line = string.split('#')
+    for i in range(len(line)):
+        item = line[i].strip()
+        # Book Name
+        if i == 0:
+            pcs.append(item)
+        # Total Number of Copies
+        elif i == 1:
+            # [Date, Total copies]
+            pcs.append([[1, int(item)]])
+        # Book Restriction
+        elif i == 2:
+            if item == "FALSE":
+                pcs.append(False)
+            elif item == "TRUE":
+                pcs.append(True)
+            else:
+                ValueError
+    # Places for Borrow Time Tuple data
+    pcs.append([])
+    dest.append(pcs)
+    return dest
+
+
 # Return EOL (End of Log) date from the librarylog.txt
 def getLogDate():
     logcalls = open("librarylog.txt", 'r', encoding='utf-8')
@@ -74,9 +116,11 @@ def ReadCommand(code, student_data, book_data):
 # Add new line to student_data and modify borrow time portion of book_data
 def borrowBooks(day, student_name, book_name, days_borrowed, student_data, book_data):
     # Dataframe Information
+    day = int(day)
+    days_borrowed = int(days_borrowed)
     # [Student Name, Book Name, Borrow Start, Borrow End, Return Date, [Day, Fine]]
     borrow_info = [student_name, book_name, day,
-                   day+days_borrowed, None, [1, 0]]
+                   day+days_borrowed, None, [[1, 0]]]
     student_data.append(borrow_info)
     # Find book on book database
     for i in range(len(book_data)):
@@ -88,6 +132,7 @@ def borrowBooks(day, student_name, book_name, days_borrowed, student_data, book_
 
 # Modify return date portion of student_data
 def returnBooks(day, student_name, book_name, student_data, book_data):
+    day = int(day)
     # Find borrow record for given student name and book name
     index = -1
     for i in range(len(student_data)):
@@ -120,6 +165,7 @@ def returnBooks(day, student_name, book_name, student_data, book_data):
 
 # Modify [Day, Fine] portion of student_data
 def payFines(day, student_name, amount, student_data):
+    day = int(day)
     remaining_fine = int(amount)
     for i in range(len(student_data)):
         # Find a data with given student name and pending fine
@@ -136,6 +182,7 @@ def payFines(day, student_name, amount, student_data):
 
 # Add book to the book_data
 def addBooks(day, book_name, book_data):
+    day = int(day)
     index = -1
     for i in range(len(book_data)):
         if book_data[i][0] == book_name:

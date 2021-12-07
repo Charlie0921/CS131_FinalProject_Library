@@ -24,11 +24,6 @@ def ratiotest(book_ratio):
     # booklist에서 가져온 것들
     # changed amount of book
     # 분모 v1
-    Booknote = list(cache_book)
-    Trent = list(cache_book[1])
-    Tlist = list(Tcopy[:-1])
-    Total = list(Ttotal[1])
-    copies.append(Total)
     '''
     분모 -> 책을 빌릴 수 있는 기회 총 횟수
     기간을 30일이라 했을 때: 
@@ -40,6 +35,17 @@ def ratiotest(book_ratio):
     range = max-min+1
     print(range)
     '''
+    x = "end point"
+    Booknote = list(cache_book)
+    Trent = list(cache_book[1])
+    date = []
+    for i in range(len(Trent)):
+        Tr = list(Trent[i])
+        max_d = Tr[1]
+        min_d = Tr[0]
+        tday = Tr[1]-Tr[0]
+        date.append(tday)
+
     # total amount of rent
     # 분자 v2
     Rentdaydata = []
@@ -53,16 +59,6 @@ def ratiotest(book_ratio):
             range = max-min+1
             sum += range
         Rentdaydata.append(sum)
-    '''
-    1. 분자 - cache_book.txt 데이터 사용
-    a) 데이터에서 line 추출
-    b) Borrow Time을 list 형태로 변환(end of the log까지 반납 x -> max = log end date)
-    c) 데이터 속에서 max - min = length(size)
-    d) sum of length(size)가 책 하나의 usage ratio가 됨
-    e) 책별로 계속 반복
-    '''
-    Rent = list(cache_book[])
-
     # Calcularing Rate
     rate = []
     for j in range(len(copies)):

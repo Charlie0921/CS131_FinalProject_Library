@@ -1,39 +1,34 @@
 # Import Modules
-import bookList as bookList
-import libraryLog as libLog
-import mode1 as m1
+import init as init
+# import mode1 as m1
 import mode2 as m2
-import mode3 as m3
+# import mode3 as m3
 import mode4 as m4
 import mode5 as m5
 
 welcome_msg = " 1) Can a student borrow a book on a particular day for a certain number of days?\n 2) What are the most borrowed/popular books in the library?\n 3) Which books have the highest borrow ratio?\n 4) Sorted lists of most borrowed books / books with highest usage ratio.\n 5) What are the pending fines at the end of the log/at a specific day in the log?\n Press any other key to exit\n"
 
-# Read book list from 'booklist.txt'
-Book = bookList.read()
-# Update booklist by using 'librarylog.txt'
+# Retrieve Book dataframe from 'booklist.txt'
+Book = init.read()
+# Update Book dataframe & Create Student dataframe through 'librarylog.txt'
 Student = []
-libLog.update(Book, Student)
-# Get cache_book and cache_student database
-print(Book)
-print(Student)
+init.update(Book, Student)
 
 while True:
     mode_select = int(input(welcome_msg))
     if mode_select == 1:
-        name = input("Student Name")
-        start_date = input("Starting date")
-        num_of_date = input("Number of days")
-        book_name = input("Name of the book")
-        m1.checkAvailable(name, start_date, num_of_date,
-                          book_name, Book, Student)
+        name = input("Student Name: ")
+        start_date = int(input("Starting date: "))
+        num_of_date = int(input("Number of days: "))
+        book_name = input("Name of the book: ")
+        # m1.checkAvailable(name, start_date, num_of_date, book_name, Book, Student)
         # Borrow Availability (replace 'pass' with corresponding functions)
         pass
     elif mode_select == 2:
         # Popular books
         print(m2.getPopularBooks(Book))
     elif mode_select == 3:
-        m3.ratiotest(booklist)
+        # m3.ratiotest(Book)
         # Borrow Ratio (replace 'pass' with corresponding functions)
         pass
     elif mode_select == 4:
