@@ -1,4 +1,5 @@
 '''
+
 1. 분자 - cache_book.txt 데이터 사용
 a) 데이터에서 line 추출
 b) Borrow Time을 list 형태로 변환(end of the log까지 반납 x -> max = log end date)
