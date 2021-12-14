@@ -161,7 +161,6 @@ def returnBooks(day, student_name, book_name, student_data, book_data):
             else:
                 fine_rate = 1
             # Update borrow time by new return date
-            print(book_data[i][3])
             borrow_time_index = book_data[i][3].index(rent_info)
             rent_info = [student_data[index][2], day]
             book_data[i][3][borrow_time_index] = rent_info
