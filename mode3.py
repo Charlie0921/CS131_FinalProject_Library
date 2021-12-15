@@ -13,7 +13,7 @@ def ratiotest(Book):
     availability = []
     for i in range(len(copies)):
         if len(copies[i]) == 1:
-            availability.append(end_of_the_log)
+            availability.append((end_of_the_log-1)*copies[i][0][-1])
         else:
             dates = copies[i]
             dateofcopy = []

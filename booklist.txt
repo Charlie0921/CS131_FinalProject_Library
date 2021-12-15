@@ -1,13 +1,9 @@
-Introduction to python#3#TRUE
-Dacheng Laojiukan Quanwen Shujuku (大成老旧刊全文数据库)#7#TRUE
-India, Raj and Empire#4#TRUE
-Technical Report Archive and Image Library (TRAIL)#2#FALSE
-Women's Studies (Adam Matthew Digital)#11#TRUE
-Medical Letter Databases#1#FALSE
-ICC Dispute Resolution Library#2#FALSE
-Eye of the world#1#FALSE
-Index Translationum#9#FALSE
-Taylor & Francis eBooks#2#TRUE
-Meiji Japan: The Edward Sylvester Morse Collection from the Peabody Essex Museum, Salem#2#TRUE
-Introduction to programming#1#FALSE
-harry potter#1#FALSE
+Intro to python#2#TRUE
+Eye of the world#3#FALSE
+Goblet of fire#2#FALSE
+Intro to c#3#TRUE
+Lord of chaos#2#FALSE
+Dragon reborn#1#FALSE
+Intro to java#1#TRUE
+Intro to assembly#1#TRUE
+Intro to csharp#1#TRUE

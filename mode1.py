@@ -10,16 +10,21 @@ init.update(Book, Student)
 #######################################check fine#########################################################
 
 
-def checkFine(Student, name):
-    studentLst = []
-    for item in Student:
-        if name == item[0]:
-            studentLst.append(item)
-    fine = m5.getPendingFines(29, studentLst)[0][1]
-    if fine == 0:
-        return True
+def checkFine(Student, name, day):
+    finelist = m5.getPendingFines(day, Student)
+    isIntheList = False
+    for fine in finelist:
+        if fine[0] == name:
+            isIntheList = True
+            break
+    if isIntheList:
+        if fine[1] == 0:
+            return False
+        else:
+            return True
     else:
         return False
+
 
 ######################################################borrow########################################
 # calculate number of books after borrowing
@@ -49,21 +54,8 @@ def findBookRow(Book, name):
 def checkNumberBooks(Bookdata):
     borrowTime = Bookdata[3]
     check = []
-    if len(borrowTime) == 0:
-        largest = 31
-    else:
-        # pick the highest number of the end time
-        endTime = []
-        for index in range(0, len(borrowTime)):
-            endTime.append(borrowTime[index][1])
-        endTime.sort()
-        largest = endTime[len(endTime)-1]
-        # pick the lowest number of the start time
-        startTime = []
-        for index in range(0, len(borrowTime)):
-            startTime.append(borrowTime[index][0])
-        startTime.sort()
-        startTime.reverse()
+    largest = init.getLogDate()
+
     numberRange = list(range(1, largest+1))
     print(numberRange)
     # [days,number of books]
@@ -95,12 +87,14 @@ def checkNumberBooks(Bookdata):
     for z in range(0, len(borrowTime)):
         check = borrow(check, borrowTime, z)
     print("number of books after borrowing", check)
-
+    return check
 
 #####################################Check available using dates#######################################
 
 # check if the person can borrow base on the number of book(if 0 books can't borrow)
-def checkAvailableDates():
+
+
+def checkAvailableDates(check, start_date, num_of_days):
     end_date = int(start_date + num_of_days)
     isValid = True
     for j in range(0, len(check)):
@@ -110,8 +104,7 @@ def checkAvailableDates():
         numberBooks = check[j][1]
         day.append(days)
         numberBook.append(numberBooks)
-
-        for testDate in range(start_date, end_date):
+        for testDate in range(start_date, end_date+1):
             for item in day:
                 if item == testDate:
                     print("testDate", testDate)
@@ -121,43 +114,24 @@ def checkAvailableDates():
                         print("numberBook", numberBook[index1])
                         isValid = False
                         break
-    if isValid == False:
-        print("You can't borrow")
-    else:
-        print("You can borrow")
+    return isValid
+
+#########################################Main######################################
 
 
-# OVERALL##################################################3
-# name, book name, 언제 빌려, 언제 반납, 실제 반납일, [날짜, fine]
-name = "Greg"
-start_date = 10
-num_of_days = 2
-book_name = "Technical Report Archive and Image Library (TRAIL)"
+def checkAvailable(student_name, start_date, num_of_days, book_name, Book, Student):
+    # 1. Check if the user has a pending fine -> if hasFine is True, user has a pending fine.
+    hasFine = checkFine(Student, student_name, start_date)
+    print(hasFine)
+
+    # 2. Check if the user has borrowed over 3 books
+
+    # Check if the requested days are available
+    data = findBookRow(Book, book_name)
+    check = checkNumberBooks(data)
+    # 3. if hasBook is True, there is a book for a user to borrow
+    hasBook = checkAvailableD5ates(check, start_date, num_of_days)
+    print(hasBook)
 
 
-def checkAvailable(name, start_date, num_of_days, book_name, Book):
-    data = Book
-
-    check = []
-    checkNumberBooks(name, Student)
-
-    # entering input and outputting result
-    """
-    bookData = data[i][0]
-    originalCopies1 = data[i][1]
-    restriction1 = data[i][2]
-    borrowTime = data[i][3]
-    index = i 
-    """
-
-    checkBorrowBook()
-
-    for i in range(0, len(data)):
-
-        if book_name == bookData:
-            print(index)
-            checkNumberBooks(index)
-            checkAvailableDates()
-
-
-checkAvailable(name, start_date, num_of_days, book_name, Book)
+checkAvailable("Greg", 76, 5, "Intro to python", Book, Student)

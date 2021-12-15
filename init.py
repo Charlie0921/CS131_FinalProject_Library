@@ -207,4 +207,4 @@ def addBooks(day, book_name, book_data):
         book_data[index][1].append([day, book_data[index][1][-1][1]+1])
     # If the book does not exist
     else:
-        book_data.append([book_name, [day, 1], False, []])
+        book_data.append([book_name, [[day, 1]], False, []])
