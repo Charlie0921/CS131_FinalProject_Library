@@ -179,18 +179,15 @@ def checkStudentBooks(Student, student_name):
 def checkAvailable(student_name, start_date, num_of_days, book_name, Book, Student):
     # 1. Check if the user has a pending fine -> if hasFine is True, user has a pending fine.
     hasFine = checkFine(Student, student_name, start_date)
-    print(hasFine)
 
     # Check if the requested days are available
     data = findBookRow(Book, book_name)
     check = checkNumberBooks(data)
     # 3. if hasBook is True, there is a book for a user to borrow
     hasBook = checkAvailableDates(check, start_date, num_of_days)
-    print(hasBook)
 
     # 2. Check if the user has borrowed over 3 books
     yesBook = checkStudentBooks(Student, student_name)
-    print(yesBook)
 
     if not hasFine and hasBook:
         if yesBook:
@@ -199,6 +196,3 @@ def checkAvailable(student_name, start_date, num_of_days, book_name, Book, Stude
             print("You cannot borrow")
     else:
         print("You cannot borrow")
-
-
-checkAvailable("Greg", 76, 5, "Intro to python", Book, Student)

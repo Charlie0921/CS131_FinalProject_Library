@@ -1,6 +1,6 @@
 # Import Modules
 import init as init
-# import mode1 as m1
+import mode1 as m1
 import mode2 as m2
 import mode3 as m3
 import mode4 as m4
@@ -27,15 +27,13 @@ for line in Student:
 while True:
     mode_select = int(input(welcome_msg))
     if mode_select == 1:
-        """
         # Borrow Availability
-        name = input("Student Name: ")
+        name = input("Student Name: ").strip()
         start_date = int(input("Starting date: "))
         num_of_date = int(input("Number of days: "))
-        book_name = input("Name of the book: ")
+        book_name = input("Name of the book: ").strip()
         m1.checkAvailable(name, start_date, num_of_date,
                           book_name, Book, Student)
-        """
     elif mode_select == 2:
         # Popular books
         print(m2.getPopularBooks(Book))
