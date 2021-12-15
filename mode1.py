@@ -116,6 +116,72 @@ def checkAvailableDates(check, start_date, num_of_days):
                         break
     return isValid
 
+###################################Check student books################
+
+
+singleStudentLst = []
+
+
+def singleStudent(Student, student_name):
+    for i in range(0, len(Student)):
+        if Student[i][0] == student_name:
+            singleStudentLst.append(Student[i])
+
+    print("single", singleStudentLst)
+
+
+# get a largest day
+largestBorrowDay = init.getLogDate()
+
+# get a smallest day
+
+borrowDayList = []
+
+
+def dayList(singleStudentLst):
+    borrow = []
+    for i in range(0, len(singleStudentLst)):
+        whenBorrow = singleStudentLst[i][2]
+        whenReturn = singleStudentLst[i][4]
+        borrow.append(whenBorrow)
+    borrow.sort()
+    smallestBorrowDay = borrow[0]
+
+    for i in range(smallestBorrowDay, largestBorrowDay + 1):
+        borrowDayList.append([i, 0])
+
+    print(borrowDayList)
+
+# change the numbers of the list
+
+
+def canBorrow(borrowDayList):
+    for i in range(0, len(singleStudentLst)):
+        whenBorrow = singleStudentLst[i][2]
+        whenReturn = singleStudentLst[i][4]
+        studentBorrow = list(range(whenBorrow, whenReturn+1))
+        print("studentborrow", studentBorrow)
+
+    # change coies of books
+    j = 0
+    while i < len(borrowDayList):
+        if borrowDayList[i][1] == 0:
+            borrowDayList[i][1] = 0
+        elif borrowDayList[i][0] in studentBorrow:
+            borrowDayList[i][1] = borrowDayList[i][1] + 1
+        i += 1
+
+    print("hello ", borrowDayList)
+
+
+# main
+
+
+def checkStudentBooks(Student, student_name):
+    singleStudent(Student, student_name)
+    dayList(singleStudentLst)
+    canBorrow(borrowDayList)
+
 #########################################Main######################################
 
 
@@ -124,14 +190,15 @@ def checkAvailable(student_name, start_date, num_of_days, book_name, Book, Stude
     hasFine = checkFine(Student, student_name, start_date)
     print(hasFine)
 
-    # 2. Check if the user has borrowed over 3 books
-
     # Check if the requested days are available
     data = findBookRow(Book, book_name)
     check = checkNumberBooks(data)
     # 3. if hasBook is True, there is a book for a user to borrow
-    hasBook = checkAvailableD5ates(check, start_date, num_of_days)
+    hasBook = checkAvailableDates(check, start_date, num_of_days)
     print(hasBook)
+
+    # 2. Check if the user has borrowed over 3 books
+    yesBook = checkStudentBooks(Student, student_name)
 
 
 checkAvailable("Greg", 76, 5, "Intro to python", Book, Student)
