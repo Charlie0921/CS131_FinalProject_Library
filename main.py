@@ -1,8 +1,8 @@
 # Import Modules
 import init as init
-# import mode1 as m1
+import mode1 as m1
 import mode2 as m2
-# import mode3 as m3
+import mode3 as m3
 import mode4 as m4
 import mode5 as m5
 
@@ -17,23 +17,27 @@ init.update(Book, Student)
 while True:
     mode_select = int(input(welcome_msg))
     if mode_select == 1:
+        # Borrow Availability
         name = input("Student Name: ")
         start_date = int(input("Starting date: "))
         num_of_date = int(input("Number of days: "))
         book_name = input("Name of the book: ")
-        # m1.checkAvailable(name, start_date, num_of_date, book_name, Book, Student)
-        # Borrow Availability (replace 'pass' with corresponding functions)
-        pass
+        m1.checkAvailable(name, start_date, num_of_date,
+                          book_name, Book, Student)
     elif mode_select == 2:
         # Popular books
         print(m2.getPopularBooks(Book))
     elif mode_select == 3:
-        # m3.ratiotest(Book)
-        # Borrow Ratio (replace 'pass' with corresponding functions)
-        pass
+        # Borrow Ratio
+        book_ratio = m3.ratiotest(Book)
+        for line in book_ratio:
+            print(line[0]+" | Ratio: "+str(line[1])+"%")
     elif mode_select == 4:
         # Sorted List of books (replace 'pass' with corresponding functions)
-        pass
+        book_ratio = m3.ratiotest(Book)
+        book_sorted = m4.sortlist(book_ratio)
+        for line in book_sorted:
+            print(line[0]+" | Ratio: "+str(line[1])+"%")
     elif mode_select == 5:
         # Pending Fines
         uin = input("On which day? Type F for the day at the end of the log: ")
@@ -44,7 +48,7 @@ while True:
         finelist = m5.getPendingFines(day, Student)
         if len(finelist) == 0:
             print("There's no pending fine for day", day)
-        for tuple in finelist:
-            print(tuple[0]+": "+str(tuple[1]))
+        for tup in finelist:
+            print(tup[0]+": "+str(tup[1]))
     else:
         break

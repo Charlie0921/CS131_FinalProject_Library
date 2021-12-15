@@ -168,9 +168,13 @@ def returnBooks(day, student_name, book_name, student_data, book_data):
     # If there is an existing borrow record in student_data
     if index > -1:
         student_data[index][4] = day  # Update return date
-        # Update fine as the return date is given
-        student_data[index][5].append(
-            [day, fine_rate * (int(student_data[index][4]) - int(student_data[index][3]))])
+        newfine = fine_rate * \
+            (int(student_data[index][4]) - int(student_data[index][3]))
+        if newfine > 0:
+            # Update fine as the return date is given
+            student_data[index][5].append([day, newfine])
+        else:
+            student_data[index][5].append([day, 0])
 
 
 # Modify [Day, Fine] portion of student_data
